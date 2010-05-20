@@ -35,19 +35,47 @@
 
 (add-to-list 'auto-mode-alist '("\\.clay\\'" . clay-mode))
 
+(defconst clay-quoted-string-re "\\(\".*?[^\\]\"\\|'.*?[^\\]'\\)")
+(defconst clay-quoted-string-or-regex-re "\\(/.*?[^\\]/\\w*\\|\".*?[^\\]\"\\|'.*?[^\\]'\\)")
+
 (defconst clay-font-lock-keywords-1
   (list
-   '("\\<\\(?:and\\|break\\|continue\\|else\\|for\\|i\\(?:mport\\|[fn]\\)\\|or\\|return\\|static\\|var\\|while\\)\\>" . font-lock-keyword-face))
+   '("\\<\\(?:and\\|break\\|continue\\|e\\(?:num\\|lse\\|xternal\\)\\|for\\|i\\(?:mport\\|nlined\\|[fn]\\)\\|\\|not\\|o\\(?:r\\|verload\\(?:able\\)?\\)\\|p\\(?:rivate\\|ublic\\)\\|re\\(?:cord\\|f\\|turn\\)\\|static\\|var\\|while\\)\\>" . font-lock-keyword-face)
+
+   ;; --- Begin handling quoted strings (lifted-from javascript.el) ---
+
+   ;; detect literal strings following a + operator
+   (list (concat "+[ \t]*" clay-quoted-string-re)  1 font-lock-string-face)
+
+   ;; detect literal strings used in "literal object" keys
+   (list (concat "[,{][ \t]*" clay-quoted-string-re "[ \t]*:" ) 1 font-lock-string-face)
+
+   ;; detects strings and regexes when assigned, passed, returned
+   ;; used as an object key string (i.e. bla["some string"]), when used
+   ;; as a literal object value (i.e. key: "string"), used as an array
+   ;; element, or when they appear as the first expression on a line
+   ;; and a few other hairy cases
+   (list (concat "[=(:,;[][ \t]*" clay-quoted-string-or-regex-re)  1 font-lock-string-face)
+   (list (concat "^[ \t]*"      clay-quoted-string-or-regex-re) 1 font-lock-string-face)
+   (list (concat "return[ \t]*" clay-quoted-string-or-regex-re) 1 font-lock-string-face)
+
+   ;; ;; detect "autoquoted" object properties... clases with "switch { ...  default: }"
+   ;; ;; may not be worth the trouble
+   ;; (list "\\(^[ \t]*\\|[,{][ \t]*\\)\\(\\w+\\):" 2 font-lock-string-face)
+
+   ;; --- End handling of quoted strings ---
+   '("\\<\\(true\\|false\\)\\>" . font-lock-constant-face))
   "Keyword highlighting for Clay mode.")
 
 ;; Moar syntax highlighting to be done - comments, builtins, strings et cetera
+;; builtins - print, println, printTo, printlnTo, assert, range, reserve
 
 (defvar clay-font-lock-keywords clay-font-lock-keywords-1
   "Default highlighting expressions for Clay mode.")
 
-;; Add code for clay-indent-line here
 
 (defun clay-indent-line ()
+  ;; TODO: handle indentation for lines ending with comma, (
   "Indent current line as clay code"
   (interactive)
   (beginning-of-line)
