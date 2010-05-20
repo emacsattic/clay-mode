@@ -62,17 +62,22 @@
             (if (< cur-indent 0) ; We can't indent past the left margin
                 (setq cur-indent 0)))
         (save-excursion
+          (setq loop-count 0)
           (while not-indented ; Iterate backwards until we find an indentation hint
+            (setq loop-count (+ loop-count 1))
             (forward-line -1)
             (if (looking-at "^[ \t]*}") ; This hint indicates that we need to indent at the level of the } token
                 (progn
                   (setq cur-indent (current-indentation))
                   (setq not-indented nil))
-              (end-of-line)
-              (backward-char 1)
-              (if (looking-at "{") ; This hint indicates we need to indent an extra level
+              ;; TODO: Clean up repeated usage of same regexp
+              (if (looking-at ".*?{[ ]*$\\|^[ \t]*\\(else\\|for\\|if\\|while\\)") ; This hint indicates we need to indent an extra level
                   (progn
-                    (setq cur-indent (+ (current-indentation) default-tab-width)) ; Do the actual indenting
+                    (setq use-current-indentation (and (> loop-count 1)
+                                                       (not (looking-at ".*?{[ ]*$"))))
+                    (setq cur-indent (if use-current-indentation
+                          (current-indentation)
+                          (+ (current-indentation) default-tab-width))) ; Do the actual indenting
                     (setq not-indented nil))
                 (if (bobp)
                     (setq not-indented nil)))))))
