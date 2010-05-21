@@ -65,7 +65,9 @@
    ;; (list "\\(^[ \t]*\\|[,{][ \t]*\\)\\(\\w+\\):" 2 font-lock-string-face)
 
    ;; --- End handling of quoted strings ---
-   '("\\<\\(true\\|false\\)\\>" . font-lock-constant-face))
+   '("\\<\\(true\\|false\\)\\>" . font-lock-constant-face)
+   '("^\\[.*?\\]$" . font-lock-warning-face)
+   '("\\(^[ \t]*var[ \t]*\\)\\(\\w+\\)[ \t]*=" 2 font-lock-variable-name-face))
   "Keyword highlighting for Clay mode.")
 
 ;; Moar syntax highlighting to be done - comments, builtins, strings et cetera
