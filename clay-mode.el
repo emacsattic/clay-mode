@@ -73,7 +73,7 @@
 (defconst clay-font-lock-keywords-2
   (append clay-font-lock-keywords-1
           (list
-           '("\\<\\(assert\\|\\(?:print\\(?:To\\|ln\\(?:To\\)?\\)?\\)\\|r\\(?:ang\\|eserv\\)e\\)" . font-lock-builtin-face)))
+           '("\\<\\(assert\\|\\(?:print\\(?:To\\|ln\\(?:To\\)?\\)?\\)\\|r\\(?:ang\\|eserv\\)e\\)\\((\\)" 1 font-lock-builtin-face)))
   "Built-in functions")
 
 (defvar clay-font-lock-keywords clay-font-lock-keywords-2
