@@ -39,8 +39,9 @@
 (defconst clay-quoted-string-or-regex-re "\\(/.*?[^\\]/\\w*\\|\".*?[^\\]\"\\|'.*?[^\\]'\\)")
 
 (defconst clay-font-lock-keywords-1
+  ;; TODO: Add - "as" "..."? "rvalue" "lvalue" "<--"? "goto" "lambda" "block" "new"
   (list
-   '("\\<\\(?:and\\|break\\|continue\\|e\\(?:num\\|lse\\|xternal\\)\\|for\\|i\\(?:mport\\|nlined\\|[fn]\\)\\|\\|not\\|o\\(?:r\\|verload\\(?:able\\)?\\)\\|p\\(?:rivate\\|ublic\\)\\|re\\(?:cord\\|f\\|turn\\)\\|static\\|var\\|while\\)\\>" . font-lock-keyword-face)
+   '("\\<\\(?:a\\(?:nd\\|s\\)\\|\\(?:b\\(?:loc\\|rea\\)k\\)\\|continue\\|e\\(?:num\\|lse\\|xternal\\)\\|for\\|goto\\|i\\(?:mport\\|nlined\\|[fn]\\)\\|l\\(?:ambda\\|value\\)\\|n\\(?:ew\\|ot\\)\\|o\\(?:r\\|verload\\(?:able\\)?\\)\\|p\\(?:rivate\\|ublic\\)\\|r\\(?:value\\|\\(e\\(?:cord\\|f\\|turn\\)\\)\\)\\|static\\|var\\|while\\)\\>" . font-lock-keyword-face)
 
    ;; --- Begin handling quoted strings (lifted-from javascript.el) ---
 
