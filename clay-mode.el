@@ -41,8 +41,6 @@
 (defconst clay-font-lock-keywords-1
   ;; TODO: Add - "as" "..."? "rvalue" "lvalue" "<--"? "goto" "lambda" "block" "new"
   (list
-   '("\\<\\(?:a\\(?:nd\\|s\\)\\|\\(?:b\\(?:loc\\|rea\\)k\\)\\|continue\\|e\\(?:num\\|lse\\|xternal\\)\\|for\\|goto\\|i\\(?:mport\\|nlined\\|[fn]\\)\\|l\\(?:ambda\\|value\\)\\|n\\(?:ew\\|ot\\)\\|o\\(?:r\\|verload\\(?:able\\)?\\)\\|p\\(?:rivate\\|ublic\\)\\|r\\(?:value\\|\\(e\\(?:cord\\|f\\|turn\\)\\)\\)\\|static\\|var\\|while\\)\\>" . font-lock-keyword-face)
-
    ;; --- Begin handling quoted strings (lifted-from javascript.el) ---
 
    ;; detect literal strings following a + operator
@@ -63,10 +61,14 @@
    ;; ;; detect "autoquoted" object properties... clases with "switch { ...  default: }"
    ;; ;; may not be worth the trouble
    ;; (list "\\(^[ \t]*\\|[,{][ \t]*\\)\\(\\w+\\):" 2 font-lock-string-face)
-
    ;; --- End handling of quoted strings ---
-   '("\\<\\(true\\|false\\)\\>" . font-lock-constant-face)
+
    '("^\\[.*?\\]$" . font-lock-warning-face)
+
+   '("\\<\\(?:a\\(?:nd\\|s\\)\\|\\(?:b\\(?:loc\\|rea\\)k\\)\\|continue\\|e\\(?:num\\|lse\\|xternal\\)\\|for\\|goto\\|i\\(?:mport\\|nlined\\|[fn]\\)\\|l\\(?:ambda\\|value\\)\\|n\\(?:ew\\|ot\\)\\|o\\(?:r\\|verload\\(?:able\\)?\\)\\|p\\(?:rivate\\|ublic\\)\\|r\\(?:value\\|\\(e\\(?:cord\\|f\\|turn\\)\\)\\)\\|static\\|var\\|while\\)\\>" . font-lock-keyword-face)
+
+   '("\\<\\(true\\|false\\)\\>" . font-lock-constant-face)
+
    '("\\(^[ \t]*var[ \t]*\\)\\(\\w+\\)[ \t]*=" 2 font-lock-variable-name-face))
   "Keyword highlighting for Clay mode.")
 
