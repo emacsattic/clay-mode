@@ -69,8 +69,13 @@
 
 ;; Moar syntax highlighting to be done - comments, builtins, strings et cetera
 ;; builtins - print, println, printTo, printlnTo, assert, range, reserve
+(defconst clay-font-lock-keywords-2
+  (append clay-font-lock-keywords-1
+          (list
+           '("\\<\\(assert\\|\\(?:print\\(?:To\\|ln\\(?:To\\)?\\)?\\)\\|r\\(?:ang\\|eserv\\)e\\)" . font-lock-builtin-face)))
+  "Built-in functions")
 
-(defvar clay-font-lock-keywords clay-font-lock-keywords-1
+(defvar clay-font-lock-keywords clay-font-lock-keywords-2
   "Default highlighting expressions for Clay mode.")
 
 
